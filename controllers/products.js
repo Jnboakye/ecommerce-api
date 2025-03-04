@@ -1,7 +1,11 @@
 // contollers are javascript functions
 
 export const addProduct = (req, res) => {
-    res.send('Product added!');
+    // Upload the product image
+    // Validate the product information
+    // Save product information in database 
+    // Return response
+    res.json(req.body);
 }
 
 export const getProducts = (req, res) => {
