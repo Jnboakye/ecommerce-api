@@ -6,7 +6,15 @@ import { ProductModel } from "../models/product.js";
 export const addProduct = async (req, res, next) => {
     try {
         // Upload the product image
+        console.log(req.file);
         // Validate the product information
+        const { error, value } = addProductValidator.validate({
+            ...req.body,
+            image: req.file.filename
+        });
+        if (error) {
+            return res.status(422).json(error);
+        }
         // Save product information in database 
         const result = await ProductModel.create(req.body)
 
