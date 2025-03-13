@@ -1,6 +1,6 @@
 //This is the business model
 // contollers are javascript functions
-
+import { addProductValidator } from "../validators/products.js";
 import { ProductModel } from "../models/product.js";
 
 export const addProduct = async (req, res, next) => {
@@ -27,8 +27,11 @@ export const addProduct = async (req, res, next) => {
 
 export const getProducts = async (req, res) => {
     try {
+        const { filter = "{}" } = req.query
         // Fetch products from database
-        const result = await ProductModel.find();
+        const result = await ProductModel
+            .find(JSON.parse(filter))
+            .sort(JSON.parse(sort));
         // Return response 
         res.json(result);
     } catch (error) {

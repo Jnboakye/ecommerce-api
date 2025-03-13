@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import normalize from "normalize-mongoose";
 
 const productSchema = new Schema({
     name: { type: String, required: true, unique: true },
@@ -8,6 +9,9 @@ const productSchema = new Schema({
     quantity: { type: Number,/* required: true */ },
 }, {
     timestamps: true
-})
+}
+);
+
+productSchema.plugin(normalize);
 
 export const ProductModel = model('Product', productSchema);
