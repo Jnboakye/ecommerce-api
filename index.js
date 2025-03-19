@@ -15,8 +15,8 @@ const app = express();
 app.use(express.json());
 
 // Use routes
-app.use(productsRouter);
-app.use(userRouter);
+app.use('/api/v1', productsRouter);
+app.use('/api/v1', userRouter);
 
 //listen for incoming request
 const port = process.env.PORT || 3000;

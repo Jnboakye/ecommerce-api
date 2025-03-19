@@ -68,4 +68,4 @@ export const loginUser = async (req, res, next) => {
     );
     // Return response
     res.status(200).json({ accessToken });
-}
+};

@@ -5,7 +5,7 @@ import { ProductModel } from "../models/product.js";
 
 export const addProduct = async (req, res, next) => {
     try {
-        console.log(req.file, req.files)
+        console.log(req.auth);
         // Upload the product image
         console.log(req.file);
         // Validate the product information
