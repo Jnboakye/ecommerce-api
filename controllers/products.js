@@ -20,11 +20,17 @@ export const addProduct = async (req, res, next) => {
             return res.status(422).json(error);
         }
         // Save product information in database 
-        const result = await ProductModel.create(req.body)
+        const result = await ProductModel.create({
+            ...value,
+            userID: req.auth.id
+        });
 
         // Return response
         res.json(result);
     } catch (error) {
+        if (error.code === 'MongooseError') {
+            return res.status(409).json(error.message);
+        }
         next(error);
     }
 }
@@ -49,6 +55,19 @@ export const contProducts = (req, res) => {
 
 export const updateProduct = (req, res) => {
     res.send(`Product with id ${req.params.id} updated`);
+}
+
+export const replaceProduct = async (req, res) => {
+    //Validate incoming request body
+    // Perform model replace operation
+    const result = await ProductModel.findOneAndReplace(
+        { _id: req.params.id },
+        req.body,
+        { new: true }
+    );
+
+    // return response
+    res.status(200).json(result);
 }
 
 export const deleteProduct = (req, res) => {

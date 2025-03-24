@@ -1,11 +1,27 @@
 // import jwt from "jsonwebtoken";
 
 import { expressjwt } from "express-jwt";
+import { userModel } from "../models/user.js";
 
 export const isAuthenticated = expressjwt({
-    secret: process.env.JWT_SECERET_KEY,
+    secret: process.env.JWT_SECRET_KEY,
     algorithms: ['HS256']
 });
+
+export const isAuthorized = (role) => {
+    return async (req, res, next) => {
+        // Find user by ID
+        const user = await userModel.findById(req.auth.id);
+        // Check if roles includes user role
+        if (roles?.includes(user.role)) {
+            next();
+        } else {
+            res.status(403).json('You are not authorized!')
+        }
+
+    }
+}
+
 
 // export const isAuthenticated = (req, res, next) => {
 //     console.log(req.headers);

@@ -1,5 +1,5 @@
 import { userModel } from "../models/user.js";
-import { loginUserValidator, registerUserValidator } from "../validators/users.js";
+import { loginUserValidator, registerUserValidator, updateUserValidator } from "../validators/users.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken"
 
@@ -69,3 +69,19 @@ export const loginUser = async (req, res, next) => {
     // Return response
     res.status(200).json({ accessToken });
 };
+
+export const updateUser = async (req, res, next) => {
+    // Validate request body
+    const { error, value } = updateUserValidator.validate(req.body);
+    if (error) {
+        return res.status(422).json(error);
+    }
+    // Update user in databse
+    const result = await userModel.findByIdAndUpdate(
+        req.params.id,
+        value,
+        { new: true }
+    );
+    // Return response
+    res.status(200).json(result);
+}

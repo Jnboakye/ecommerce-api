@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addProduct, contProducts, deleteProduct, getProducts, updateProduct } from "../controllers/products.js";
+import { addProduct, contProducts, deleteProduct, getProducts, replaceProduct, updateProduct } from "../controllers/products.js";
 import { localUpload, productPicturesUpload, remoteUpload } from "../middlewares/upload.js";
 import { isAuthenticated } from "../middlewares/auth.js";
 
@@ -18,6 +18,8 @@ productsRouter.get('/products', getProducts);
 productsRouter.get('/products/count', contProducts);
 
 productsRouter.patch('/products/:id', isAuthenticated, updateProduct);
+
+productsRouter.put('/products/:id', isAuthenticated, replaceProduct);
 
 productsRouter.delete('/products/:id', isAuthenticated, deleteProduct);
 
